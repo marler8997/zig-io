@@ -1,0 +1,29 @@
+name: Build
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+          - os: windows-11-arm
+          - os: macos-latest
+          - os: ubuntu-latest
+    runs-on: ${{matrix.os}}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Zig
+        uses: marler8997/setup-anyzig@master
+
+      - name: Build 0.16.0
+        run: zig 0.16.0 build --summary all test
