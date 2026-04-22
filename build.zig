@@ -19,7 +19,7 @@ pub fn build(b: *std.Build) void {
                 .root_source_file = b.path("test/smoke.zig"),
                 .target = target,
                 .optimize = optimize,
-                .single_threaded = true,
+                .single_threaded = false,
             }),
         });
         exe.root_module.addImport("Threaded", threaded_mod);
